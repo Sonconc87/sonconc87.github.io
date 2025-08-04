@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công cụ Cấu hình Tất-cả-trong-một</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-input {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #ffffff;
+        }
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+        .tab-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-btn.active {
+            background-color: #0e7490;
+            color: #ffffff;
+        }
+        .tab-btn:not(.active) {
+            background-color: #374151;
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-4xl bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 space-y-6">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-white">Công cụ Cấu hình Tất-cả-trong-một</h1>
+            <p class="text-gray-400 mt-2">Chọn tab ESP32 hoặc ESP-01 để bắt đầu.</p>
+        </div>
+
+        <!-- Tab Buttons -->
+        <div class="flex border-b border-gray-700">
+            <button id="tab-esp32" class="tab-btn active flex-1 py-2 px-4 font-semibold rounded-t-lg">ESP32 Master</button>
+            <button id="tab-esp01" class="tab-btn flex-1 py-2 px-4 font-semibold rounded-t-lg">ESP-01 Slave</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="content-esp32">
+            <!-- ESP32 Master Form -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-cyan-400 mb-2">1. Thông tin Blynk</h2>
+                        <div class="space-y-3">
+                            <div><label for="templateId" class="block text-sm font-medium text-gray-300">BLYNK_TEMPLATE_ID</label><input type="text" id="templateId" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="TMPLxxxxxxxx"></div>
+                            <div><label for="templateName" class="block text-sm font-medium text-gray-300">BLYNK_TEMPLATE_NAME</label><input type="text" id="templateName" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="Tên dự án của bạn"></div>
+                            <div><label for="authToken" class="block text-sm font-medium text-gray-300">Blynk Auth Token</label><input type="text" id="authToken" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="Token gửi về email"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-cyan-400 mb-2">2. Thông tin WiFi</h2>
+                        <div class="space-y-3">
+                            <div><label for="ssid" class="block text-sm font-medium text-gray-300">Tên WiFi (SSID)</label><input type="text" id="ssid" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="TrongLam"></div>
+                            <div><label for="password" class="block text-sm font-medium text-gray-300">Mật khẩu WiFi</label><input type="password" id="password" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="12345689"></div>
+                            <div><label for="wifiChannel" class="block text-sm font-medium text-gray-300">Kênh WiFi (1-13)</label><input type="number" id="wifiChannel" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="6" value="6"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-cyan-400 mb-2">3. Địa chỉ MAC của các ESP-01 Slave</h2>
+                        <div class="space-y-3">
+                            <div><label for="mac1" class="block text-sm font-medium text-gray-300">ESP-01 Slave 1</label><input type="text" id="mac1" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="VD: 8C:AA:B5:6C:C7:82"></div>
+                            <div><label for="mac2" class="block text-sm font-medium text-gray-300">ESP-01 Slave 2</label><input type="text" id="mac2" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="Nhập địa chỉ MAC thứ 2"></div>
+                            <div><label for="mac3" class="block text-sm font-medium text-gray-300">ESP-01 Slave 3</label><input type="text" id="mac3" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="Nhập địa chỉ MAC thứ 3"></div>
+                            <div><label for="mac4" class="block text-sm font-medium text-gray-300">ESP-01 Slave 4</label><input type="text" id="mac4" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="Nhập địa chỉ MAC thứ 4"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-cyan-400 mb-2">4. Cấu hình Chân Nút bấm (GPIO)</h2>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div><label for="pin1" class="block text-sm font-medium text-gray-300">Nút 1</label><input type="number" id="pin1" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="25"></div>
+                            <div><label for="pin2" class="block text-sm font-medium text-gray-300">Nút 2</label><input type="number" id="pin2" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="33"></div>
+                            <div><label for="pin3" class="block text-sm font-medium text-gray-300">Nút 3</label><input type="number" id="pin3" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="32"></div>
+                            <div><label for="pin4" class="block text-sm font-medium text-gray-300">Nút 4</label><input type="number" id="pin4" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="26"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-6"><button id="generateBtn-esp32" class="w-full md:w-auto inline-flex justify-center items-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700">Tạo Code ESP32</button></div>
+        </div>
+
+        <div id="content-esp01" class="hidden">
+            <!-- ESP-01 Slave Form -->
+            <div class="max-w-md mx-auto space-y-4">
+                <div><label for="relayPin" class="block text-sm font-medium text-gray-300">Chân Relay (GPIO)</label><input type="number" id="relayPin" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="0 hoặc 2" value="0"></div>
+                <div><label for="wifiChannel-esp01" class="block text-sm font-medium text-gray-300">Kênh WiFi (Phải giống ESP32)</label><input type="number" id="wifiChannel-esp01" class="mt-1 block w-full rounded-md form-input shadow-sm" placeholder="6" value="6"></div>
+                <div><label for="activeLevel" class="block text-sm font-medium text-gray-300">Mức kích hoạt Relay</label><select id="activeLevel" class="mt-1 block w-full rounded-md form-input shadow-sm"><option value="LOW" selected>Active LOW (Kích hoạt mức thấp)</option><option value="HIGH">Active HIGH (Kích hoạt mức cao)</option></select></div>
+            </div>
+            <div class="text-center pt-6"><button id="generateBtn-esp01" class="w-full md:w-auto inline-flex justify-center items-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700">Tạo Code ESP-01</button></div>
+        </div>
+
+        <!-- Common Result Area -->
+        <div id="error-message" class="hidden text-center p-3 bg-red-800/50 text-red-300 rounded-md"></div>
+        <div id="result" class="hidden space-y-4 pt-4">
+            <h2 id="result-title" class="text-xl font-semibold text-center text-white"></h2>
+            <div class="relative">
+                <pre class="bg-gray-900 rounded-lg p-4 text-sm overflow-x-auto"><code id="code-output" class="language-cpp"></code></pre>
+                <button id="copyBtn" class="absolute top-2 right-2 px-3 py-1 text-xs font-medium rounded-md bg-gray-700 text-gray-300 hover:bg-gray-600">Sao chép</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabEsp32 = document.getElementById('tab-esp32');
+        const tabEsp01 = document.getElementById('tab-esp01');
+        const contentEsp32 = document.getElementById('content-esp32');
+        const contentEsp01 = document.getElementById('content-esp01');
+        
+        const generateBtnEsp32 = document.getElementById('generateBtn-esp32');
+        const generateBtnEsp01 = document.getElementById('generateBtn-esp01');
+        
+        const resultDiv = document.getElementById('result');
+        const resultTitle = document.getElementById('result-title');
+        const codeOutput = document.getElementById('code-output');
+        const copyBtn = document.getElementById('copyBtn');
+        const errorMessageDiv = document.getElementById('error-message');
+
+        // Tab switching logic
+        tabEsp32.addEventListener('click', () => {
+            tabEsp32.classList.add('active');
+            tabEsp01.classList.remove('active');
+            contentEsp32.classList.remove('hidden');
+            contentEsp01.classList.add('hidden');
+            resultDiv.classList.add('hidden');
+        });
+
+        tabEsp01.addEventListener('click', () => {
+            tabEsp01.classList.add('active');
+            tabEsp32.classList.remove('active');
+            contentEsp01.classList.remove('hidden');
+            contentEsp32.classList.add('hidden');
+            resultDiv.classList.add('hidden');
+        });
+
+        // --- ESP32 Master Logic ---
+        function formatMacAddress(macString) {
+            if (!macString) return '{0x00, 0x00, 0x00, 0x00, 0x00, 0x00}';
+            const parts = macString.replace(/:/g, ' ').replace(/-/g, ' ').split(' ').filter(p => p);
+            if (parts.length !== 6) return null;
+            return `{0x${parts.join(', 0x')}}`;
+        }
+
+        generateBtnEsp32.addEventListener('click', () => {
+            const templateId = document.getElementById('templateId').value.trim();
+            const templateName = document.getElementById('templateName').value.trim();
+            const authToken = document.getElementById('authToken').value.trim();
+            const ssid = document.getElementById('ssid').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const wifiChannel = document.getElementById('wifiChannel').value.trim() || '6';
+            const macStrings = [
+                document.getElementById('mac1').value.trim(), document.getElementById('mac2').value.trim(),
+                document.getElementById('mac3').value.trim(), document.getElementById('mac4').value.trim()
+            ];
+            const pins = [
+                document.getElementById('pin1').value.trim() || '25', document.getElementById('pin2').value.trim() || '33',
+                document.getElementById('pin3').value.trim() || '32', document.getElementById('pin4').value.trim() || '26'
+            ];
+
+            if (!templateId || !templateName || !authToken || !ssid || !macStrings[0]) {
+                errorMessageDiv.textContent = 'Vui lòng điền đầy đủ các thông tin bắt buộc: Template ID, Name, Auth Token, SSID và ít nhất 1 địa chỉ MAC.';
+                errorMessageDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+            
+            const macArrays = macStrings.map(formatMacAddress);
+            if (macArrays.some(m => m === null)) {
+                errorMessageDiv.textContent = 'Định dạng địa chỉ MAC không hợp lệ. Vui lòng kiểm tra lại (ví dụ: 1A:2B:3C:4D:5E:6F).';
+                errorMessageDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+            errorMessageDiv.classList.add('hidden');
+
+            const codeTemplate = `
+/**
+ * =================================================================
+ * == CODE ESP32 MASTER ĐƯỢC TẠO TỰ ĐỘNG BỞI CÔNG CỤ CỦA GEMINI ==
+ * =================================================================
+ * Ngày tạo: ${new Date().toLocaleDateString('vi-VN')}
+ * =================================================================
+ */
+#define BLYNK_TEMPLATE_ID "${templateId}"
+#define BLYNK_TEMPLATE_NAME "${templateName}"
+#define BLYNK_PRINT Serial
+#include <cstdint>
+#include <esp_now.h>
+#include <WiFi.h>
+#include <esp_wifi.h> 
+#include <BlynkSimpleEsp32.h>
+#include <cstring>
+char auth[] = "${authToken}";
+char ssid[] = "${ssid}";
+char pass[] = "${password}";
+const int WIFI_CHANNEL = ${wifiChannel};
+uint8_t slave_mac_1[] = ${macArrays[0]};
+uint8_t slave_mac_2[] = ${macArrays[1]};
+uint8_t slave_mac_3[] = ${macArrays[2]};
+uint8_t slave_mac_4[] = ${macArrays[3]};
+const int BUTTON_PIN_1 = ${pins[0]};
+const int BUTTON_PIN_2 = ${pins[1]};
+const int BUTTON_PIN_3 = ${pins[2]};
+const int BUTTON_PIN_4 = ${pins[3]};
+// =================== END OF CONFIG ===================
+bool relay_states[4] = {false, false, false, false};
+typedef struct struct_message { bool state; } struct_message;
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {}
+void setup() {
+  Serial.begin(115200); Serial.println("Khởi động ESP32 Master...");
+  WiFi.mode(WIFI_STA); WiFi.setAutoReconnect(false); 
+  WiFi.begin(ssid, pass); Blynk.config(auth);
+  if (esp_now_init() != ESP_OK) { Serial.println("Lỗi ESP-NOW"); return; }
+  esp_now_register_send_cb(OnDataSent);
+  esp_now_peer_info_t peerInfo; memset(&peerInfo, 0, sizeof(peerInfo));
+  peerInfo.ifidx = WIFI_IF_STA; peerInfo.channel = WIFI_CHANNEL; peerInfo.encrypt = false;
+  memcpy(peerInfo.peer_addr, slave_mac_1, 6); if (esp_now_add_peer(&peerInfo) != ESP_OK){ Serial.println("Lỗi peer 1"); return; }
+  memcpy(peerInfo.peer_addr, slave_mac_2, 6); if (esp_now_add_peer(&peerInfo) != ESP_OK){ Serial.println("Lỗi peer 2"); return; }
+  memcpy(peerInfo.peer_addr, slave_mac_3, 6); if (esp_now_add_peer(&peerInfo) != ESP_OK){ Serial.println("Lỗi peer 3"); return; }
+  memcpy(peerInfo.peer_addr, slave_mac_4, 6); if (esp_now_add_peer(&peerInfo) != ESP_OK){ Serial.println("Lỗi peer 4"); return; }
+  pinMode(BUTTON_PIN_1, INPUT_PULLUP); pinMode(BUTTON_PIN_2, INPUT_PULLUP);
+  pinMode(BUTTON_PIN_3, INPUT_PULLUP); pinMode(BUTTON_PIN_4, INPUT_PULLUP);
+  Serial.println("Hệ thống sẵn sàng!");
+}
+void sendCommand(int relay_index, bool state) {
+  if (relay_index < 0 || relay_index > 3) return;
+  relay_states[relay_index] = state; struct_message myData; myData.state = state;
+  uint8_t* target_mac;
+  switch(relay_index) {
+    case 0: target_mac = slave_mac_1; break; case 1: target_mac = slave_mac_2; break;
+    case 2: target_mac = slave_mac_3; break; case 3: target_mac = slave_mac_4; break;
+  }
+  esp_wifi_set_channel(WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
+  esp_now_send(target_mac, (uint8_t *) &myData, sizeof(myData));
+}
+void handleButtons() {
+    static unsigned long lastDebounceTime[4] = {0}; static bool button_pressed[4] = {false};
+    for (int i = 0; i < 4; i++) {
+        int pin;
+        switch(i) {
+            case 0: pin = BUTTON_PIN_1; break; case 1: pin = BUTTON_PIN_2; break;
+            case 2: pin = BUTTON_PIN_3; break; case 3: pin = BUTTON_PIN_4; break;
+        }
+        if (digitalRead(pin) == LOW) {
+            if (!button_pressed[i] && (millis() - lastDebounceTime[i]) > 50) {
+                button_pressed[i] = true; lastDebounceTime[i] = millis();
+                bool newState = !relay_states[i]; sendCommand(i, newState);
+                if (Blynk.connected()) { Blynk.virtualWrite(V0 + i, newState ? HIGH : LOW); }
+            }
+        } else { button_pressed[i] = false; }
+    }
+}
+BLYNK_WRITE(V0) { if (relay_states[0] != (param.asInt() == 1)) sendCommand(0, param.asInt() == 1); }
+BLYNK_WRITE(V1) { if (relay_states[1] != (param.asInt() == 1)) sendCommand(1, param.asInt() == 1); }
+BLYNK_WRITE(V2) { if (relay_states[2] != (param.asInt() == 1)) sendCommand(2, param.asInt() == 1); }
+BLYNK_WRITE(V3) { if (relay_states[3] != (param.asInt() == 1)) sendCommand(3, param.asInt() == 1); }
+BLYNK_CONNECTED() {
+  Serial.println("Đã kết nối lại Blynk! Đồng bộ...");
+  for (int i = 0; i < 4; i++) { Blynk.virtualWrite(V0 + i, relay_states[i] ? HIGH : LOW); }
+}
+void loop() {
+  handleButtons();
+  if (WiFi.status() == WL_CONNECTED) { Blynk.run(); } 
+  else {
+    static unsigned long lastReconnectAttempt = 0;
+    if (millis() - lastReconnectAttempt > 20000) {
+      lastReconnectAttempt = millis();
+      Serial.println("Mất Wifi. Đang thử kết nối lại...");
+      WiFi.reconnect();
+    }
+  }
+}`;
+            resultTitle.textContent = 'Code đã tạo cho ESP32 Master';
+            codeOutput.textContent = codeTemplate.trim();
+            resultDiv.classList.remove('hidden');
+        });
+
+        // --- ESP-01 Slave Logic ---
+        generateBtnEsp01.addEventListener('click', () => {
+            const relayPin = document.getElementById('relayPin').value.trim() || '0';
+            const wifiChannel = document.getElementById('wifiChannel-esp01').value.trim() || '6';
+            const activeLevel = document.getElementById('activeLevel').value;
+            const onState = activeLevel === 'LOW' ? 'LOW' : 'HIGH';
+            const offState = activeLevel === 'LOW' ? 'HIGH' : 'LOW';
+
+            const codeTemplate = `
+/**
+ * =================================================================
+ * == CODE ESP-01 SLAVE ĐƯỢC TẠO TỰ ĐỘNG BỞI CÔNG CỤ CỦA GEMINI ==
+ * =================================================================
+ * Ngày tạo: ${new Date().toLocaleDateString('vi-VN')}
+ * =================================================================
+ */
+#include <ESP8266WiFi.h>
+#include <espnow.h>
+// =================== CONFIG ===================
+const int RELAY_PIN = ${relayPin}; 
+const int WIFI_CHANNEL = ${wifiChannel}; 
+// ==============================================
+typedef struct struct_message { bool state; } struct_message;
+void OnDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
+  struct_message myData;
+  memcpy(&myData, incomingData, sizeof(myData));
+  Serial.print("Nhận lệnh: "); Serial.println(myData.state ? "BẬT" : "TẮT");
+  digitalWrite(RELAY_PIN, myData.state ? ${onState} : ${offState}); 
+}
+void setup() {
+  Serial.begin(115200); Serial.println();
+  pinMode(RELAY_PIN, OUTPUT); digitalWrite(RELAY_PIN, ${offState}); 
+  WiFi.mode(WIFI_STA);
+  Serial.print("MAC Address: "); Serial.println(WiFi.macAddress());
+  uint8_t mac[6]; WiFi.macAddress(mac);
+  Serial.print("Dán vào code ESP32: ");
+  Serial.printf("{0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X};\\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  if (wifi_set_channel(WIFI_CHANNEL) == false) { Serial.println("Lỗi kênh Wifi"); }
+  if (esp_now_init() != 0) { Serial.println("Lỗi ESP-NOW"); return; }
+  esp_now_set_self_role(ESP_NOW_ROLE_SLAVE);
+  esp_now_register_recv_cb(OnDataRecv);
+  Serial.printf("ESP-01 Slave sẵn sàng trên kênh %d\\n", WIFI_CHANNEL);
+}
+void loop() {}`;
+            resultTitle.textContent = 'Code đã tạo cho ESP-01 Slave';
+            codeOutput.textContent = codeTemplate.trim();
+            resultDiv.classList.remove('hidden');
+        });
+
+        // Common copy logic
+        copyBtn.addEventListener('click', () => {
+            const codeToCopy = codeOutput.textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = codeToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            copyBtn.textContent = 'Đã sao chép!';
+            setTimeout(() => { copyBtn.textContent = 'Sao chép'; }, 2000);
+        });
+    </script>
+</body>
+</html>
