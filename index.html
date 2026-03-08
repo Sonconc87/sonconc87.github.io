@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>ESP32 Control</title>
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-</head>
 
-<body>
+<h3>Gửi Message tới ESP32</h3>
 
-<h2>Điều khiển ESP32</h2>
-
-<button onclick="bat()">BẬT</button>
-<button onclick="tat()">TẮT</button>
+<input id="msg" placeholder="Nhập message">
+<button onclick="gui()">Gửi</button>
 
 <script>
 
-const client = mqtt.connect("wss://58526a444969487488b14adcb20bbfac.s1.eu.hivemq.cloud:8884/mqtt",{
+const client = mqtt.connect(
+"wss://58526a444969487488b14adcb20bbfac.s1.eu.hivemq.cloud:8884/mqtt",
+{
 username:"Tson11",
 password:"Quynhkhoi2026."
 })
@@ -23,15 +18,14 @@ client.on("connect",function(){
 console.log("MQTT Connected")
 })
 
-function bat(){
-client.publish("home/test","ON")
-}
+function gui(){
 
-function tat(){
-client.publish("home/test","OFF")
+let message = document.getElementById("msg").value
+
+client.publish("home/test",message)
+
+console.log("Sent:",message)
+
 }
 
 </script>
-
-</body>
-</html>
